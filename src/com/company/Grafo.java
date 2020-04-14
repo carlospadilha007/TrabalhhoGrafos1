@@ -5,7 +5,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -13,7 +12,7 @@ public class Grafo {
     private int NUMERO_USUARIOS = 51;
     // Arvore de Usuarios
     private Usuario[][] matrizUsuarios = new Usuario[this.getNUMERO_USUARIOS()][this.getNUMERO_USUARIOS()];
-    private int[][] matrizU = new int[this.getNUMERO_USUARIOS()][this.getNUMERO_USUARIOS()];
+    private int[][] matrizRelacoes = new int[this.getNUMERO_USUARIOS()][this.getNUMERO_USUARIOS()];
     private int[][] matrizPesos = new int[this.getNUMERO_USUARIOS()][this.getNUMERO_USUARIOS()];
     private ArrayList<Usuario> listaUsuarios = new ArrayList<>();
     private Set<Usuario> arvoreUsuarios = new TreeSet<>();
@@ -45,12 +44,12 @@ public class Grafo {
             for(j = 0; j < getNUMERO_USUARIOS(); j++){
                 this.matrizPesos[i][j] = 0;
                 this.matrizUsuarios[i][j] = null;
-                this.matrizU[i][j] = 0;
+                this.matrizRelacoes[i][j] = 0;
             }
         }
 
-        getUsuario();
-        povoaMatrizU();
+        getUsuarios();
+        povoaMatrizRelacoes();
         povoaMatrizPesos();
         // inserir relações primarias
         /*
@@ -96,7 +95,7 @@ public class Grafo {
 
     }
 
-    public void getUsuario(){
+    public void getUsuarios(){
         try {
             FileReader ler = new FileReader("entrada.dat");
             BufferedReader lerB = new BufferedReader(ler);
@@ -120,7 +119,7 @@ public class Grafo {
         }
     }
 
-    public void povoaMatrizU(){
+    public void povoaMatrizRelacoes(){
         try {
             FileReader ler = new FileReader("relacoes.dat");
             BufferedReader lerB = new BufferedReader(ler);
@@ -132,7 +131,7 @@ public class Grafo {
                 i ++;
                 String[] estados = linha.split(" ");
                 for(int j = 1; j < estados.length; j++){
-                    this.matrizU[i][j] = Integer.parseInt(estados[j]);
+                    this.matrizRelacoes[i][j] = Integer.parseInt(estados[j]);
                 }
                 linha = lerB.readLine();
             }
