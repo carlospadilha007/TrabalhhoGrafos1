@@ -1,20 +1,32 @@
 package com.company;
 import java.util.ArrayList;
 
-public class Usuario {
+public class Usuario implements Comparable<Usuario>{
     private String nome;
     private int idade;
     private int numeroSeguidores;
     private ArrayList<String> listaSeguidores;
     private ArrayList<String> listaSeguindo;
+    private int id;
 
-    public Usuario(String nome, int idade) {
+    public Usuario(String nome, int idade, int id) {
         this.nome = nome;
         this.idade = idade;
+        this.id = id;
     }
+
+
 
     public Usuario() {
 
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -66,5 +78,10 @@ public class Usuario {
                 ", Lista de Seguidores=" + listaSeguidores + "\n"+
                 "Seguindo = " + listaSeguindo +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Usuario o) {
+        return o.id;
     }
 }
