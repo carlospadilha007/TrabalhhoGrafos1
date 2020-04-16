@@ -13,7 +13,8 @@ public class Grafo {
     // Arvore de Usuarios
     private int[][] matrizAdjacencia = new int[this.getNUMERO_USUARIOS()][this.getNUMERO_USUARIOS()];
     private ArrayList<ArrayList<Integer>> matrizPesos = new ArrayList<ArrayList<Integer>>();
-    private Set<No> arvoreUsuarios = new TreeSet<>();
+    private ArrayList<Set<No>> arvoreAdjacencia = new ArrayList<TreeSet<No>>();
+    private ArrayList<ArrayList<No>> listaAdjacencia = new ArrayList<>();
     private ArrayList<Usuario> listaUsuarios = new ArrayList<>(); // lista de dados de todos os usuarios
     public Grafo() {
 
@@ -68,13 +69,17 @@ public class Grafo {
             }
             System.out.println();
         }
+        System.out.println("lista ajacencia " + this.listaAdjacencia.size());
+        for(i = 1; i < getNUMERO_USUARIOS(); i++){
+            for(j = 1; j < this.listaAdjacencia.get(i).size(); j++){
+                System.out.print(listaAdjacencia.get(i).get(j).toString() + " ");
+            }
+            System.out.println();
+        }
     }
 
     public void inserirUsuario(){
 
-    }
-
-    private void povoaListaAdjacencia() {
     }
 
     public void inserirRelacao(){
@@ -173,8 +178,30 @@ public class Grafo {
         }
     }
 
-    public void inicializaEstruturas(){
-
+    private void povoaListaAdjacencia() {
+        int i, j;
+        for(i = 0; i < this.getNUMERO_USUARIOS(); i++){
+            listaAdjacencia.add(new ArrayList<No>());
+            for(j = 0; j < this.getNUMERO_USUARIOS(); j++){
+                if (this.matrizPesos.get(i).get(j) > 0){
+                    listaAdjacencia.get(i).add(new No(j, this.matrizPesos.get(i).get(j)));
+                }
+            }
+        }
     }
+
+    private void povoaArvoreAdacecia(){
+        int i, j;
+        for(i = 0; i < this.getNUMERO_USUARIOS(); i++){
+            arvoreAdjacencia.add(new Set<No>()) {
+            });
+            for(j = 0; j < this.getNUMERO_USUARIOS(); j++){
+                if (this.matrizPesos.get(i).get(j) > 0){
+                    arvoreAdjacencia.get(i).add(new No(j, this.matrizPesos.get(i).get(j)));
+                }
+            }
+        }
+    }
+
 }
 

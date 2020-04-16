@@ -10,9 +10,6 @@ public class No implements Comparable<No> {
         this.peso = peso;
     }
 
-    public No() {
-    }
-
     public int getId() {
         return id;
     }
@@ -31,7 +28,7 @@ public class No implements Comparable<No> {
 
     @Override
     public String toString() {
-        return "No{" +
+        return "{" +
                 "id=" + id +
                 ", peso=" + peso +
                 '}';
