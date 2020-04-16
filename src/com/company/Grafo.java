@@ -11,12 +11,10 @@ import java.util.TreeSet;
 public class Grafo {
     private int NUMERO_USUARIOS = 51;
     // Arvore de Usuarios
-    private Usuario[][] matrizUsuarios = new Usuario[this.getNUMERO_USUARIOS()][this.getNUMERO_USUARIOS()];
-    private int[][] matrizRelacoes = new int[this.getNUMERO_USUARIOS()][this.getNUMERO_USUARIOS()];
-    private int[][] matrizPesos = new int[this.getNUMERO_USUARIOS()][this.getNUMERO_USUARIOS()];
-    private ArrayList<Usuario> listaUsuarios = new ArrayList<>();
-    private Set<Usuario> arvoreUsuarios = new TreeSet<>();
-    private ArrayList<Usuario> usuarios = new ArrayList<>(); // lista de dados de todos os usuarios
+    private int[][] matrizAdjacencia = new int[this.getNUMERO_USUARIOS()][this.getNUMERO_USUARIOS()];
+    private ArrayList<ArrayList<Integer>> matrizPesos = new ArrayList<ArrayList<Integer>>();
+    private Set<No> arvoreUsuarios = new TreeSet<>();
+    private ArrayList<Usuario> listaUsuarios = new ArrayList<>(); // lista de dados de todos os usuarios
     public Grafo() {
 
     }
@@ -25,32 +23,25 @@ public class Grafo {
         return NUMERO_USUARIOS;
     }
 
-    public Usuario[][] getMatrizUsuarios() {
-        return matrizUsuarios;
-    }
 
     public void setNUMERO_USUARIOS(int NUMERO_USUARIOS) {
         this.NUMERO_USUARIOS = NUMERO_USUARIOS;
-    }
-
-    public void setMatrizUsuarios(Usuario[][] matrizUsuarios) {
-        this.matrizUsuarios = matrizUsuarios;
     }
 
     public void inicializarGrafos(){
         int i, j;
         // zerar a matriz de pesos
         for(i = 0; i < getNUMERO_USUARIOS(); i++){
+            matrizPesos.add(new ArrayList<Integer>());
             for(j = 0; j < getNUMERO_USUARIOS(); j++){
-                this.matrizPesos[i][j] = 0;
-                this.matrizUsuarios[i][j] = null;
-                this.matrizRelacoes[i][j] = 0;
+                this.matrizPesos.get(i).add(0);
+                this.matrizAdjacencia[i][j] = 0;
             }
         }
-
-        getUsuarios();
         povoaMatrizRelacoes();
         povoaMatrizPesos();
+        povoaListaAdjacencia();
+        getUsuarios();
         // inserir relações primarias
         /*
         for(i = 1; i < getNUMERO_USUARIOS(); i++){
@@ -63,12 +54,27 @@ public class Grafo {
             }
         }
         */
-
-
+        /*System.out.println("mat adj");
+        for(i = 1; i < getNUMERO_USUARIOS(); i++){
+            for(j = 1; j < getNUMERO_USUARIOS(); j++){
+                System.out.print(matrizAdjacencia[i][j] + " ");
+            }
+            System.out.println();
+        }*/
+        System.out.println("mat pesos");
+        for(i = 1; i < getNUMERO_USUARIOS(); i++){
+            for(j = 1; j < getNUMERO_USUARIOS(); j++){
+                System.out.print(matrizPesos.get(i).get(j) + " ");
+            }
+            System.out.println();
+        }
     }
 
     public void inserirUsuario(){
 
+    }
+
+    private void povoaListaAdjacencia() {
     }
 
     public void inserirRelacao(){
@@ -110,7 +116,7 @@ public class Grafo {
                 nome = estados[0];
                 idade = Integer.parseInt(estados[1]);
                 id = Integer.parseInt(estados[2]);
-                usuarios.add(new Usuario(nome, idade, id));
+                listaUsuarios.add(new Usuario(nome, idade, id));
                 linha = lerB.readLine();
             }
 
@@ -131,7 +137,7 @@ public class Grafo {
                 i ++;
                 String[] estados = linha.split(" ");
                 for(int j = 1; j < estados.length; j++){
-                    this.matrizRelacoes[i][j] = Integer.parseInt(estados[j]);
+                    this.matrizAdjacencia[i][j] = Integer.parseInt(estados[j]);
                 }
                 linha = lerB.readLine();
             }
@@ -155,7 +161,7 @@ public class Grafo {
                 i ++;
                 String[] estados = linha.split(" ");
                 for(int j = 1; j < estados.length; j++){
-                    this.matrizPesos[i][j] = Integer.parseInt(estados[j]);
+                    this.matrizPesos.get(i).set(j, new Integer(Integer.parseInt(estados[j])));
                 }
                 linha = lerB.readLine();
             }
@@ -165,6 +171,10 @@ public class Grafo {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void inicializaEstruturas(){
+
     }
 }
 
