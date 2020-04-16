@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -13,7 +14,7 @@ public class Grafo {
     // Arvore de Usuarios
     private int[][] matrizAdjacencia = new int[this.getNUMERO_USUARIOS()][this.getNUMERO_USUARIOS()];
     private ArrayList<ArrayList<Integer>> matrizPesos = new ArrayList<ArrayList<Integer>>();
-    private ArrayList<Set<No>> arvoreAdjacencia = new ArrayList<TreeSet<No>>();
+    private ArrayList<TreeSet<No>> arvoreAdjacencia = new ArrayList<>();
     private ArrayList<ArrayList<No>> listaAdjacencia = new ArrayList<>();
     private ArrayList<Usuario> listaUsuarios = new ArrayList<>(); // lista de dados de todos os usuarios
     public Grafo() {
@@ -29,12 +30,12 @@ public class Grafo {
         this.NUMERO_USUARIOS = NUMERO_USUARIOS;
     }
 
-    public void inicializarGrafos(){
+    public void inicializarGrafos() {
         int i, j;
         // zerar a matriz de pesos
-        for(i = 0; i < getNUMERO_USUARIOS(); i++){
+        for (i = 0; i < getNUMERO_USUARIOS(); i++) {
             matrizPesos.add(new ArrayList<Integer>());
-            for(j = 0; j < getNUMERO_USUARIOS(); j++){
+            for (j = 0; j < getNUMERO_USUARIOS(); j++) {
                 this.matrizPesos.get(i).add(0);
                 this.matrizAdjacencia[i][j] = 0;
             }
@@ -42,6 +43,7 @@ public class Grafo {
         povoaMatrizRelacoes();
         povoaMatrizPesos();
         povoaListaAdjacencia();
+        povoaArvoreAdacecia();
         getUsuarios();
         // inserir relações primarias
         /*
@@ -62,20 +64,31 @@ public class Grafo {
             }
             System.out.println();
         }*/
-        System.out.println("mat pesos");
-        for(i = 1; i < getNUMERO_USUARIOS(); i++){
-            for(j = 1; j < getNUMERO_USUARIOS(); j++){
+        /*System.out.println("mat pesos");
+        for (i = 1; i < getNUMERO_USUARIOS(); i++) {
+            for (j = 1; j < getNUMERO_USUARIOS(); j++) {
                 System.out.print(matrizPesos.get(i).get(j) + " ");
             }
             System.out.println();
         }
-        System.out.println("lista ajacencia " + this.listaAdjacencia.size());
+         */
+       /* System.out.println("lista ajacencia " + this.listaAdjacencia.size());
         for(i = 1; i < getNUMERO_USUARIOS(); i++){
             for(j = 1; j < this.listaAdjacencia.get(i).size(); j++){
                 System.out.print(listaAdjacencia.get(i).get(j).toString() + " ");
             }
             System.out.println();
         }
+        */
+        /*System.out.println("Arvore Adj");
+        for (i = 1; i < getNUMERO_USUARIOS(); i++) {
+            //System.out.println(arvoreAdjacencia.get(i));
+           Iterator<No> iterator = this.arvoreAdjacencia.get(i).iterator();
+            while (iterator.hasNext()) {
+                System.out.print(iterator.next() + " ");
+            }
+        }
+        */
     }
 
     public void inserirUsuario(){
@@ -193,8 +206,7 @@ public class Grafo {
     private void povoaArvoreAdacecia(){
         int i, j;
         for(i = 0; i < this.getNUMERO_USUARIOS(); i++){
-            arvoreAdjacencia.add(new Set<No>()) {
-            });
+            arvoreAdjacencia.add(new TreeSet<No>());
             for(j = 0; j < this.getNUMERO_USUARIOS(); j++){
                 if (this.matrizPesos.get(i).get(j) > 0){
                     arvoreAdjacencia.get(i).add(new No(j, this.matrizPesos.get(i).get(j)));

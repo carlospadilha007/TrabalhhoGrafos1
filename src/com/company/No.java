@@ -36,7 +36,7 @@ public class No implements Comparable<No> {
 
     @Override
     public int compareTo(No o) {
-        return o.id;
+        return id - o.id;
     }
 
 }
