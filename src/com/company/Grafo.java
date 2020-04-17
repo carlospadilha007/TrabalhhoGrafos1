@@ -4,10 +4,7 @@ package com.company;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class Grafo {
     private int NUMERO_USUARIOS = 51;
@@ -90,7 +87,18 @@ public class Grafo {
     }
 
     public void inserirUsuario(){
-        return;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Digite o nome: ");
+        String nome = scanner.nextLine();
+        int idade = new Random().nextInt(100);
+        listaUsuarios.add(new Usuario(nome, idade, getNUMERO_USUARIOS()));
+        matrizPesos.add(new ArrayList<>());
+        for (int i = 0; i < getNUMERO_USUARIOS(); i++){
+            matrizPesos.get(getNUMERO_USUARIOS()).add(0);
+        }
+        for (int i = 0; i < getNUMERO_USUARIOS(); i++){
+            matrizPesos.get(i).add(0);
+        }
     }
 
     public void inserirRelacao(){
@@ -98,11 +106,73 @@ public class Grafo {
     }
 
     public void listarSeguidores(int exibicao){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Lista de usuarios");
+        int id = -1;
+        for(int i = 0; i < listaUsuarios.size(); i++){
+            System.out.print(listaUsuarios.get(i).getNome() + " - ");
+        }
+        String nome;
+        System.out.println("Digite o nome do usario: ");
+        nome = scanner.nextLine();
+        for(int i = 0; i < listaUsuarios.size(); i++){
+            if (listaUsuarios.get(i).getNome().equals(nome)){
+                id = listaUsuarios.get(i).getId();
+            }
+        }
+        if (id == -1){
+            System.out.println("Usuario não existe");
+            return;
+        }
+        if(exibicao == 1){
+            int i;
+            for (i = 0; i < getNUMERO_USUARIOS() - 1; i++){
+                if(matrizPesos.get(i).get(id) != 0){
+                    System.out.print(listaUsuarios.get(i - 1).getNome() + ", " + matrizPesos.get(i).get(id) +  " meses; ");
+                }
+            }
+        }else if (exibicao == 2){
+            int i, j = 0;
+            for (i = 0; i < listaAdjacencia.get(id).size() - 2; i++){
+                if(j < listaAdjacencia.get(id - 1).size() - 1){
+                    int aux = listaAdjacencia.get(id - 1).get(i).getId();
+                    System.out.print(listaUsuarios.get(aux).getNome() + ", " +
+                            listaAdjacencia.get(id).get(j).getPeso() +  " meses; ");
+                    j++;
+                }
+                j++;
+            }
+        } else {
 
+        }
     }
 
     public void listarSeguidoresVelhos(int exibicao){
+        if(exibicao == 1){
+            int i, j;
+            for (j = 0; j < getNUMERO_USUARIOS() - 1; j++){
+                for(i = 0; i < getNUMERO_USUARIOS() - 1; i++){
+                   int aux = matrizPesos.get(i).get(j);
+                   if (aux != 0){
+                       if(listaUsuarios.get(i - 1).getIdade() > listaUsuarios.get(j - 1).getIdade()){
+                           System.out.println(listaUsuarios.get(j - 1));
+                       }
+                   }
+                }
+            }
+        }else if (exibicao == 2){
+            int i, j;
+            for (i = 0; i < getNUMERO_USUARIOS() - 1; i++){
+                for (j = 0; j < listaAdjacencia.get(i).size() - 1; j++){
+                    int aux2 = listaAdjacencia.get(i).get(j).getId();
+                    System.out.println(j);
+                    if (listaUsuarios.get(i - 1).getIdade() < listaUsuarios.get(aux2).getIdade()){
+                        System.out.println(listaUsuarios.get(i));
+                    }
+                }
 
+            }
+        }
     }
 
     public void atualizarRelacao(){
@@ -121,7 +191,7 @@ public class Grafo {
         try {
             FileReader ler = new FileReader("entrada.dat");
             BufferedReader lerB = new BufferedReader(ler);
-            String linha = lerB.readLine();
+            String linha;
             //campitura dos dados para um altomato 1
             linha = lerB.readLine();
             while(linha != null) {
@@ -181,9 +251,6 @@ public class Grafo {
                 }
                 linha = lerB.readLine();
             }
-
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }

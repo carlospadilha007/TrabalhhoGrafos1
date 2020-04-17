@@ -1,5 +1,7 @@
 package com.company;
 
+import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
+
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -14,6 +16,7 @@ public class Main {
         System.out.println("5- Atualizar relação");
         System.out.println("6- Remover usuario");
         System.out.println("7- Remover relação");
+        System.out.println("8- Auterar mode de exibicao");
         System.out.println("0- Sair");
     }
 
@@ -21,7 +24,7 @@ public class Main {
         System.out.println("Digite uma qual estrura deseja ver: ");
         System.out.println("1- Matriz Pesos");
         System.out.println("2- Lista ajdcencia");
-        System.out.println("3- Arvore Robro-Negra");
+        // System.out.println("3- Arvore Robro-Negra");
     }
 
 
@@ -32,8 +35,13 @@ public class Main {
         Grafo redeSocial = new Grafo();
         redeSocial.inicializarGrafos();
         Scanner scanner = new Scanner(System.in);
-        menuExibicao();
-        metodoExibicao = scanner.nextInt();
+        while (true){
+            menuExibicao();
+            metodoExibicao = scanner.nextInt();
+            if (metodoExibicao == 1 || metodoExibicao == 2|| metodoExibicao == 3)
+                break;
+            else System.out.println("Valor invalido!\nTente novamente!");
+        }
         while (true){
             menu();
             int op = scanner.nextInt();
@@ -61,13 +69,18 @@ public class Main {
                 }break;
                 case 0:{
                     System.exit(00);
-                }
+                }break;
+                case 8:{
+                    while (true){
+                        menuExibicao();
+                        metodoExibicao = scanner.nextInt();
+                        if (metodoExibicao == 1 || metodoExibicao == 2|| metodoExibicao == 3)
+                            break;
+                        else System.out.println("Valor invalido!\nTente novamente!");
+                    }
+                }break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + op);
-            }
-
-            for(int i = 0; i < 100; i++){
-                System.out.println();
             }
 
         }
