@@ -52,36 +52,34 @@ public class Grafo {
                 if (i != j){
                     if (this.matrizU[i][j] != 0){
                         this.matrizPesos[i][j] = new Random().nextInt(100);
-                    }
+                    }0
                 }
             }
-        }
-        */
+        }*/
+
         /*System.out.println("mat adj");
         for(i = 1; i < getNUMERO_USUARIOS(); i++){
             for(j = 1; j < getNUMERO_USUARIOS(); j++){
                 System.out.print(matrizAdjacencia[i][j] + " ");
             }
             System.out.println();
-        }*/
-        /*System.out.println("mat pesos");
+        }
+        System.out.println("mat pesos");
         for (i = 1; i < getNUMERO_USUARIOS(); i++) {
             for (j = 1; j < getNUMERO_USUARIOS(); j++) {
                 System.out.print(matrizPesos.get(i).get(j) + " ");
             }
             System.out.println();
         }
-         */
-       /* System.out.println("lista ajacencia " + this.listaAdjacencia.size());
-        for(i = 1; i < getNUMERO_USUARIOS(); i++){
-            for(j = 1; j < this.listaAdjacencia.get(i).size(); j++){
+         System.out.println("lista ajacencia " + this.listaAdjacencia.size());
+        for(i = 0; i < getNUMERO_USUARIOS(); i++){
+            for(j = 0; j < this.listaAdjacencia.get(i).size(); j++){
                 System.out.print(listaAdjacencia.get(i).get(j).toString() + " ");
             }
             System.out.println();
         }
-        */
-        /*System.out.println("Arvore Adj");
-        for (i = 1; i < getNUMERO_USUARIOS(); i++) {
+        System.out.println("Arvore Adj");
+        for (i = 0; i < getNUMERO_USUARIOS(); i++) {
             //System.out.println(arvoreAdjacencia.get(i));
            Iterator<No> iterator = this.arvoreAdjacencia.get(i).iterator();
             while (iterator.hasNext()) {
@@ -92,18 +90,18 @@ public class Grafo {
     }
 
     public void inserirUsuario(){
-
+        return;
     }
 
     public void inserirRelacao(){
 
     }
 
-    public void listarSeguidores(){
+    public void listarSeguidores(int exibicao){
 
     }
 
-    public void listarSeguidoresVelhos(){
+    public void listarSeguidoresVelhos(int exibicao){
 
     }
 
@@ -196,8 +194,8 @@ public class Grafo {
         for(i = 0; i < this.getNUMERO_USUARIOS(); i++){
             listaAdjacencia.add(new ArrayList<No>());
             for(j = 0; j < this.getNUMERO_USUARIOS(); j++){
-                if (this.matrizPesos.get(i).get(j) > 0){
-                    listaAdjacencia.get(i).add(new No(j, this.matrizPesos.get(i).get(j)));
+                if (this.matrizPesos.get(j).get(i) != 0){
+                    listaAdjacencia.get(i).add(new No(j, this.matrizPesos.get(j).get(i)));
                 }
             }
         }
@@ -208,8 +206,8 @@ public class Grafo {
         for(i = 0; i < this.getNUMERO_USUARIOS(); i++){
             arvoreAdjacencia.add(new TreeSet<No>());
             for(j = 0; j < this.getNUMERO_USUARIOS(); j++){
-                if (this.matrizPesos.get(i).get(j) > 0){
-                    arvoreAdjacencia.get(i).add(new No(j, this.matrizPesos.get(i).get(j)));
+                if (this.matrizPesos.get(j).get(i) != 0){
+                    arvoreAdjacencia.get(i).add(new No(j, this.matrizPesos.get(j).get(i)));
                 }
             }
         }
